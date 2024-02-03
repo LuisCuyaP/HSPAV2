@@ -1,0 +1,41 @@
+[
+    {
+      "Id" : 1,
+      "SellRent": 1,
+      "Name": "Macro Home",
+      "Type": "House",
+      "Price": 12200,
+      "Image": "prop-1"
+    },
+    {
+      "Id" : 2,
+      "SellRent": 2,
+      "Name": "DDDDD",
+      "Type": "House",
+      "Price": 18500,
+      "Image": "prop-2"
+    },
+    {
+      "Id" : 3,
+      "SellRent": 1,
+      "Name": "Pearl Wthite",
+      "Type": "House",
+      "Price": 11700,
+      "Image": "prop-3"
+    },
+    {
+      "Id" : 4,
+      "SellRent": 1,
+      "Name": "DDDDD",
+      "Type": "House",
+      "Price": 19200,
+      "Image": "prop-4"
+    },
+    {
+      "Id" : 5,
+      "SellRent": 1,
+      "Name": "Asentamiento",
+      "Type": "House",
+      "Price": 32200
+    }
+]
