@@ -5,20 +5,23 @@
         <h3>List your Property</h3>
       </div>
       <div class="card-body">
-        <form (ngSubmit)="onSubmit()" #Form="ngForm">        
+        <!-- <form (ngSubmit)="onSubmit()" #Form="ngForm">   -->
+        <form (ngSubmit)="onSubmit()" [formGroup]="addPropertyForm" >
           <div class="tab-panel">
             <tabset class="member-tabset" #formTabs>        
-              <tab heading="Basic Info">
+              <!-- <tab heading="Basic Info" ngModelGroup="BasicInfo" #BasicInfo="ngModelGroup"> -->
+              <tab heading="Basic Info"> 
                 <div class="form-group col-12">
                 <p>I want to</p>
-                  <div class="btn-group" btnRadioGroup>
+                  <!-- <div class="btn-group" btnRadioGroup ngModel name="SellRent" required> -->
+                  <div class="btn-group" btnRadioGroup formControlName="SellRent">
                     <label class="btn btn-outline-primary me-2" btnRadio =1 tabindex="0" role="button" name="SellRent">Sell</label>
                     <label class="btn btn-outline-primary" btnRadio =2 tabindex="0" role="button" name="SellRent">Rent</label>
                   </div>
                 </div>
                 <div class="form-group col-12">
                   <p>BHK</p>
-                    <div class="btn-group" btnRadioGroup>
+                    <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.BHK" name="BHK" [ngModelOptions]="{standalone: true}">
                       <label 
                       *ngFor="let bhk of [1,2,3,4]"
                       class="btn btn-outline-primary me-2" 
@@ -27,7 +30,7 @@
                 </div>
                 <div class="form-group col-12">
                   <p>Property Type</p>
-                    <div class="btn-group" btnRadioGroup name="propType" [(ngModel)]="propertyView.Type">
+                    <div class="btn-group" btnRadioGroup formControlName="PType" [(ngModel)]="propertyView.PType">
                       <label 
                       *ngFor="let ptype of propertyTypes"
                       class="btn btn-outline-primary me-2" 
@@ -36,7 +39,7 @@
                 </div>
                 <div class="form-group col-12">
                   <p>Furnishing Type</p>
-                    <div class="btn-group" btnRadioGroup>
+                    <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.FType" [ngModelOptions]="{standalone: true}" name="FType">
                       <label 
                       *ngFor="let ftype of furnishyTypes"
                       class="btn btn-outline-primary me-2" 
@@ -46,7 +49,7 @@
                 <div class="form-group col-12">
                   <label form="name">in Building/Society/Project</label>
                   <input type="text" class="form-control" #propName="ngModel" 
-                        ngModel name="Name" required minlength="5" [(ngModel)]="propertyView.Name">
+                        ngModel name="Name" required minlength="5" [(ngModel)]="propertyView.Name" [ngModelOptions]="{standalone: true}" >
                     <span *ngIf="!propName.valid && propName.touched" class="error-block">
                     <span *ngIf="propName.errors.required"> Please provide name </span>
                     <span *ngIf="propName.errors.minlength"> Name must be atleast 5 char long </span>
@@ -55,16 +58,17 @@
                       
                 <div class="form-group col-12">
                   <label form="name">City</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" [(ngModel)]="propertyView.City" [ngModelOptions]="{standalone: true}" name="City">
                 </div>      
                 <div class="form-group d-grid">
-                  <button type="button" class="btn btn-primary btn-block" (click)="selectTab(1)">Next</button>              
+                  <!-- <button type="button" class="btn btn-primary btn-block" [disabled]="!BasicInfo.valid" (click)="selectTab(1)">Next</button>               -->
+                  <button type="button" class="btn btn-primary btn-block"  (click)="selectTab(1)">Next</button>
                 </div>
               </tab>
               <tab heading="Pricing and Area"> 
                 <div class="form-group col-12">
                   <label>Price (in USD)</label>
-                  <input type="text" class="form-control" name="price" [(ngModel)]="propertyView.Price">
+                  <input type="text" class="form-control" name="price" [ngModelOptions]="{standalone: true}"  [(ngModel)]="propertyView.Price">
                 </div>
                 <div class="form-group col-12">
                   <label>Security (in USD)</label>
@@ -76,7 +80,7 @@
                 </div>
                 <div class="form-group col-12">
                   <label>Built Area (in Sqr Feet)</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" [(ngModel)]="propertyView.BuiltArea" [ngModelOptions]="{standalone: true}"  name="BuiltArea">
                 </div>
                 <div class="form-group col-12 d-grid gap-2">
                   <button type="button" class="btn btn-primary btn-block" (click)="selectTab(2)">Next</button> 
@@ -163,10 +167,11 @@
     </div>
   </div>
   <div class="col-4">
-    <div class="card-header"></div>
-    <h3>Your Property Preview</h3>
-    <div>
-      <app-property-card [property]="propertyView"></app-property-card>
-    </div>
+    <div class="card-header">
+      <h3>Your Property Preview</h3>
+    </div>    
+    <div class="shadow-lg p-3 bg-white">
+        <app-property-card [property]="propertyView" hideIcons="true"></app-property-card>
+    </div>    
   </div>
 </div>
