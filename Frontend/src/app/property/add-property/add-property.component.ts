@@ -3,6 +3,9 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
+import { Property } from 'src/app/model/property';
+import { AlertifyService } from 'src/app/services/alertify.service';
+import { HousingService } from 'src/app/services/housing.service';
 
 
 @Component({
@@ -15,6 +18,7 @@ export class AddPropertyComponent implements OnInit {
   @ViewChild('formTabs') formTabs: TabsetComponent;
   addPropertyForm: FormGroup;
   nextClicked: boolean;
+  property = new Property();
 
   propertyTypes: Array<string> = ['House','Apartment','Duplex']
   furnishyTypes: Array<string> = ['Fully','Semi','Unfurnished']
@@ -32,7 +36,11 @@ export class AddPropertyComponent implements OnInit {
     RTM: null
   };
 
-  constructor(private fb: FormBuilder,private router: Router) { }
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private housingService: HousingService,
+              private alertify: AlertifyService) { }
+
 
   ngOnInit() {
     this.CreateAddPropertyForm();
@@ -84,9 +92,9 @@ export class AddPropertyComponent implements OnInit {
   }
 
   
-   // #region <Getter Methods>
-    // #region <FormGroups>
-    get BasicInfo() {
+// #region <Getter Methods>
+  // #region <FormGroups>
+  get BasicInfo() {
       return this.addPropertyForm.controls.BasicInfo as FormGroup;
   }
 
@@ -168,8 +176,8 @@ export class AddPropertyComponent implements OnInit {
       return this.OtherInfo.controls.RTM as FormControl;
   }
 
-  get PossessionOn() {
-      return this.OtherInfo.controls.PossessionOn as FormControl;
+  get PosessionOn() {
+      return this.OtherInfo.controls.PosessionOn as FormControl;
   }
 
   get AOP() {
@@ -189,7 +197,7 @@ export class AddPropertyComponent implements OnInit {
   }
 
   // #endregion
-  // #endregion
+// #endregion
   
   onBack(){
     this.router.navigate(['/']);
@@ -198,14 +206,52 @@ export class AddPropertyComponent implements OnInit {
   onSubmit(){
     this.nextClicked = true;
     if(this.allTabsValid()){
-      console.log("Congrats");
+      //aqui obtengo los valores de  mi modelo property
+      this.mapProperty();
+      this.housingService.addProperty(this.property);
+
+      this.alertify.success("Congrats");
       console.log('SellRent=' + this.addPropertyForm.value.BasicInfo.SellRent);
       console.log(this.addPropertyForm);    
+
+      if (this.SellRent.value === '2') {
+        this.router.navigate(['/rent-property']);
+      }else {
+        this.router.navigate(['/']);
+      }
+      
     }else{
-      console.log("Error");
+      this.alertify.error("Error");
+      console.log(this.addPropertyForm);    
     }
      
     
+  }
+
+  mapProperty(): void {
+    this.property.SellRent = +this.SellRent.value;
+    this.property.BHK = this.BHK.value;
+    this.property.PType = this.PType.value;
+    this.property.Name = this.Name.value;
+    this.property.City = this.City.value;
+    this.property.FType = this.FType.value;
+    this.property.Price = this.Price.value;
+    this.property.Security = this.Security.value;
+    this.property.Maintenance = this.Maintenance.value;
+    this.property.BuiltArea = this.BuiltArea.value;
+    this.property.CarpetArea = this.CarpetArea.value;
+    this.property.FloorNo = this.FloorNo.value;
+    this.property.TotalFloor = this.TotalFloor.value;
+    this.property.Address = this.Address.value;
+    this.property.Address2 = this.LandMark.value;
+    this.property.RTM = this.RTM.value;
+    this.property.AOP = this.AOP.value;
+    this.property.Gated = this.Gated.value;
+    this.property.MainEntrance = this.MainEntrance.value;
+    this.property.Possession = this.PosessionOn.value;
+    this.property.Description = this.Description.value;
+    this.property.Image = 'propNA';
+    this.property.PostedOn = new Date().toString();
   }
 
   allTabsValid(): boolean {
