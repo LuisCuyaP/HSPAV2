@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HousingService } from 'src/app/services/housing.service';
 import { IProperty } from '../IProperty.interface';
 import { ActivatedRoute } from '@angular/router';
+import { IPropertyBase } from 'src/app/model/ipropertybase';
 
 @Component({
   selector: 'app-property-list',
@@ -10,7 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PropertyListComponent implements OnInit {
   SellRent = 1;
-  properties: IProperty[];
+  //aca escojo a IPropertyBase ya que es una interfaz que hereda de mi clase Property, mi interfaz solo lo usare para agarrar ciertos campos que debo mostrar en el html
+  properties: Array<IPropertyBase> = [];
+  Today = new Date();
+  City = '';
+  SearchCity = '';
+  SortbyParam = '';
+  SortDirection = 'asc';
 
   constructor(private route: ActivatedRoute, private housingService: HousingService) { }
 
@@ -44,13 +51,30 @@ export class PropertyListComponent implements OnInit {
       }, error => {
         console.log(error);
       }
-    )
+    );
     // this.http.get('data/properties.json').subscribe(
     //   data=>{
     //     this.properties = data;
     //     console.log(data)
     //   }
     // );
+  }
+
+  onCityFilter() {
+    this.SearchCity = this.City;
+  }
+
+  onCityFilterClear() {
+    this.SearchCity = '';
+    this.City = '';
+  }
+
+  onSortDirection() {
+    if (this.SortDirection === 'desc') {
+        this.SortDirection = 'asc';
+    } else {
+        this.SortDirection = 'desc';
+    }
   }
 
 }

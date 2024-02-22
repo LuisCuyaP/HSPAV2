@@ -23,7 +23,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   },
 
@@ -51,7 +51,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   },
   {
@@ -78,7 +78,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   },
 
@@ -106,7 +106,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   },
   {
@@ -133,7 +133,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   },
 
@@ -160,7 +160,7 @@
     "Gated":1,
     "Security":0,
     "Maintenance":300,
-    "Posession":"Ready to move",
+    "Possession":"Ready to move",
     "PostedOn":"01-Jan-2019"
   }
 ]

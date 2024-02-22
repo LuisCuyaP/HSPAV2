@@ -8,6 +8,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -21,12 +22,16 @@ import { UserRegisterComponent } from './user/user-register/user-register.compon
 import { UserServiceService } from './services/user-service.service';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
+import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
+import { FilterPipe } from './Pipes/filter.pipe';
+import { SortPipe } from './Pipes/sort.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: PropertyListComponent  },
   { path: 'rent-property', component: PropertyListComponent  },
   { path: 'add-property', component: AddPropertyComponent  },
-  { path: 'property-detail/:id', component: PropertyDetailComponent  },
+  //en esta ruta se debe agregar resolve ya que en este componente se agrego un servicio resolve
+  { path: 'property-detail/:id', component: PropertyDetailComponent, resolve: {prp: PropertyDetailResolverService} },
   { path: 'user/login', component: UserLoginComponent  },
   { path: 'user/register', component: UserRegisterComponent  },
   { path: '**', component: PropertyListComponent  }
@@ -41,7 +46,9 @@ const appRoutes: Routes = [
     AddPropertyComponent,
     PropertyDetailComponent,
     UserLoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    FilterPipe,
+    SortPipe
    
   ],
   imports: [
@@ -54,13 +61,15 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgxGalleryModule
   ],
   providers: [
     HousingService,
     UserServiceService,
     AlertifyService,
-    AuthService
+    AuthService,
+    PropertyDetailResolverService
   ],
   bootstrap: [AppComponent]
 })
