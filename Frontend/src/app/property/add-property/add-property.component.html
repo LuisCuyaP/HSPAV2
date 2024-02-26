@@ -5,7 +5,7 @@
         <h3>List your Property</h3>
       </div>
       <div class="card-body">
-        
+
 
         <!-- <form (ngSubmit)="onSubmit()" #Form="ngForm">   -->
         <form (ngSubmit)="onSubmit()" [formGroup]="addPropertyForm" >
@@ -83,10 +83,15 @@
                       
                 <div class="form-group col-12">
                   <label form="name">City</label>
-                  <input type="text"
+                  <select 
                   class="form-control"
                   formControlName="City"
                   [(ngModel)]="propertyView.City">
+                   <option value="">--Select City--</option>
+                    <option *ngFor="let city of cityList" value={{city.id}}>
+                      {{city.name}}
+                    </option>
+                  </select>
                   <div class="error-block"
                   *ngIf="City.invalid && (nextClicked || City.touched)">
                     Please select city
