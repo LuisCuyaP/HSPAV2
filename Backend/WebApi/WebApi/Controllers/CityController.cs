@@ -18,16 +18,15 @@ using WebApi.Models;
 using WebApi.Interfaces;
 using WebApi.Dtos;
 using System;
-using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CityController : ControllerBase
+    [Authorize]
+    public class CityController : BaseController
     {
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
@@ -42,10 +41,13 @@ namespace WebApi.Controllers
 
 
         //GET api/city/
+        //[AllowAnonymous] = ignora el atributo Authorize, osea no es necesario agregar el JWT en la consulta por mas que 
+        //este el authorize en el controlador
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
-            throw new UnauthorizedAccessException();
+            //throw new UnauthorizedAccessException();
             var cities = await uow.CityRepository.GetCitiesAsync();
 
             //aca estoy mapeando CityDto

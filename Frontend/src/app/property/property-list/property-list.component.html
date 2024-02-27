@@ -20,6 +20,8 @@
   <div *ngFor="let property of properties|filter:SearchCity:'City'|sort:[SortbyParam,SortDirection]"
   class="col-sm-4">
     <div class="shadow-lg p-3 mb-4">
+      <!-- aca a [property] que pertence al componente card lo abastesco de info a travez del for property
+      eso quiere decir que le paso la info a prop card a travez del ="property" -->
         <app-property-card [property]="property"></app-property-card>
     </div>
 </div>

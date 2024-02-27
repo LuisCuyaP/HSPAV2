@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "XY7aIc0t0yCstNYakwtimBlZgRQ9WZbyJP9UVsb3q/9/QkWhoykpGO60ZXvbqUOhN9p31lqh4JzXDj1sJc3lNg==",
+  "dgSpecHash": "dwxmvwNc8fpD8lmtN81bsG20LBXHmkl/Wi2VJ69kOSzhqiYEbgxuNEHDOj+jR/kUP7Gpw7eDIhtiJeMMIE0wkQ==",
   "success": true,
   "projectFilePath": "C:\\Repositorio\\HSPA\\Backend\\WebApi\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\luist\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\luist\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
+    "C:\\Users\\luist\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\luist\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.8\\microsoft.aspnetcore.jsonpatch.3.1.8.nupkg.sha512",
     "C:\\Users\\luist\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.8\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.8.nupkg.sha512",
     "C:\\Users\\luist\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
