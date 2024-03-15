@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap';
+import { Ikeyvaluepair } from 'src/app/model/ikeyvaluepair';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { Property } from 'src/app/model/property';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -20,30 +22,38 @@ export class AddPropertyComponent implements OnInit {
   nextClicked: boolean;
   property = new Property();
 
-  propertyTypes: Array<string> = ['House','Apartment','Duplex']
-  furnishyTypes: Array<string> = ['Fully','Semi','Unfurnished']
+  // propertyTypes: Array<string> = ['House','Apartment','Duplex']
+  // furnishyTypes: Array<string> = ['Fully','Semi','Unfurnished']
+  propertyTypes: Ikeyvaluepair[];
+  furnishyTypes: Ikeyvaluepair[];
   cityList: any[];
 
   propertyView: IPropertyBase = {
-    Id: null,
-    Name: '',
-    Price: null,
-    SellRent: null,
-    PType: null,
-    FType: null,
-    BHK: null,
-    BuiltArea: null,
-    City: null,
-    RTM: null
+    id: null,
+    name: '',
+    price: null,
+    sellRent: null,
+    propertyType: null,
+    furnishingType: null,
+    bhk: null,
+    builtArea: null,
+    city: null,
+    readyToMove: null
   };
 
-  constructor(private fb: FormBuilder,
+  constructor(private datePipe: DatePipe,
+              private fb: FormBuilder,
               private router: Router,
               private housingService: HousingService,
               private alertify: AlertifyService) { }
 
 
   ngOnInit() {
+    if(!localStorage.getItem('userName')){
+      this.alertify.error('No estas logeado');
+      this.router.navigate(['/user/login']);
+    }
+
     this.CreateAddPropertyForm();
 
     this.housingService.getAllCities().subscribe(data =>{
@@ -55,7 +65,17 @@ export class AddPropertyComponent implements OnInit {
     // setTimeout(() => {
     //   this.addPropertyForm.controls['Name'].setValue('Default Value');
     // }, 1000);
+    this.housingService.getPropertyTypes().subscribe(data => {
+      this.propertyTypes = data;
+    });
+
+    this.housingService.getFurnishingTypes().subscribe(data => {
+      this.furnishyTypes = data;
+    });
+
   }
+
+
 
   CreateAddPropertyForm(){
     this.addPropertyForm = this.fb.group({
@@ -72,8 +92,8 @@ export class AddPropertyComponent implements OnInit {
         Price: [null, Validators.required],
         BuiltArea: [null, Validators.required],
         CarpetArea: [null],
-        Security: [null],
-        Maintenance: [null]
+        Security: [0],
+        Maintenance: [0]
       }),
       
       AddressInfo: this.fb.group({
@@ -85,7 +105,7 @@ export class AddPropertyComponent implements OnInit {
 
       OtherInfo: this.fb.group({
         RTM: [null, Validators.required],
-        PosessionOn: [null],
+        PosessionOn: [null, Validators.required],
         AOP: [null],
         Gated: [null],
         MainEntrance: [null],
@@ -212,18 +232,19 @@ export class AddPropertyComponent implements OnInit {
     if(this.allTabsValid()){
       //aqui obtengo los valores de  mi modelo property
       this.mapProperty();
-      this.housingService.addProperty(this.property);
-
-      this.alertify.success("Congrats");
-      console.log('SellRent=' + this.addPropertyForm.value.BasicInfo.SellRent);
-      console.log(this.addPropertyForm);    
-
-      if (this.SellRent.value === '2') {
-        this.router.navigate(['/rent-property']);
-      }else {
-        this.router.navigate(['/']);
+      this.housingService.addProperty(this.property).subscribe(
+        () => {
+          this.alertify.success("Congrats");
+          console.log('SellRent=' + this.addPropertyForm.value.BasicInfo.SellRent);
+          console.log(this.addPropertyForm);    
+  
+          if (this.SellRent.value === '2') {
+            this.router.navigate(['/rent-property']);
+          }else {
+            this.router.navigate(['/']);
+          }
       }
-      
+      );    
     }else{
       this.alertify.error("Error");
       console.log(this.addPropertyForm);    
@@ -233,30 +254,29 @@ export class AddPropertyComponent implements OnInit {
   }
 
   mapProperty(): void {
-    this.property.Id = this.housingService.newPropId();
-    this.property.SellRent = +this.SellRent.value;
-    this.property.BHK = this.BHK.value;
-    this.property.PType = this.PType.value;
-    this.property.Name = this.Name.value;
-    this.property.City = this.City.value;
-    this.property.FType = this.FType.value;
-    this.property.Price = this.Price.value;
+    this.property.id = this.housingService.newPropId();
+    this.property.sellRent = +this.SellRent.value;
+    this.property.bhk = this.BHK.value;
+    this.property.propertyTypeId = this.PType.value;
+    this.property.name = this.Name.value;
+    this.property.cityId = this.City.value;
+    this.property.furnishingTypeId = this.FType.value;
+    this.property.price = this.Price.value;
     this.property.Security = this.Security.value;
-    this.property.Maintenance = this.Maintenance.value;
-    this.property.BuiltArea = this.BuiltArea.value;
-    this.property.CarpetArea = this.CarpetArea.value;
-    this.property.FloorNo = this.FloorNo.value;
-    this.property.TotalFloor = this.TotalFloor.value;
-    this.property.Address = this.Address.value;
-    this.property.Address2 = this.LandMark.value;
-    this.property.RTM = this.RTM.value;
-    this.property.AOP = this.AOP.value;
-    this.property.Gated = this.Gated.value;
-    this.property.MainEntrance = this.MainEntrance.value;
-    this.property.Possession = this.PosessionOn.value;
-    this.property.Description = this.Description.value;
-    this.property.Image = 'propNA';
-    this.property.PostedOn = new Date().toString();
+    this.property.maintenance = this.Maintenance.value;
+    this.property.builtArea = this.BuiltArea.value;
+    this.property.carpetArea = this.CarpetArea.value;
+    this.property.floorNo = this.FloorNo.value;
+    this.property.totalFloors = this.TotalFloor.value;
+    this.property.address = this.Address.value;
+    this.property.address2 = this.LandMark.value;
+    this.property.readyToMove = this.RTM.value;
+    this.property.gated = this.Gated.value;
+    this.property.mainEntrance = this.MainEntrance.value;
+    this.property.estPossessionOn = this.datePipe.transform(this.PosessionOn.value, 'MM/dd/yyyy');
+    this.property.description = this.Description.value;
+    this.property.photo = 'propNA';
+    //this.property.PostedOn = new Date().toString();
   }
 
   allTabsValid(): boolean {

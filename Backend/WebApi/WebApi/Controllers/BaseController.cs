@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -7,5 +8,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
+        protected int GetUserId()
+        {
+            return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            //return 1;
+        }
     }
 }

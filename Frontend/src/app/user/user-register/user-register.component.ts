@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { User } from 'src/app/model/user';
+import { UserForRegister } from 'src/app/model/user';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import * as alertyfy from 'alertifyjs';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-user-register',
@@ -13,12 +15,13 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class UserRegisterComponent implements OnInit {
 
   registerationForm: FormGroup;
-  user: User;
+  user: UserForRegister;
   userSubmitted: boolean;
 
   constructor(private fb: FormBuilder, 
               private userService: UserServiceService,
-              private alertify: AlertifyService) { }
+              private alertify: AlertifyService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     // this.registerationForm = new FormGroup({
@@ -67,21 +70,37 @@ export class UserRegisterComponent implements OnInit {
   //----------------------
 
   onSubmit(){
-    console.log(this.registerationForm.value);
-    this.userSubmitted = true;
+    // console.log(this.registerationForm.value);
+    // this.userSubmitted = true;
+    // if(this.registerationForm.valid){
+    //   this.user = Object.assign(this.user, this.registerationForm.value);
+    //   this.userService.addUser(this.userData());    
+    //   this.registerationForm.reset();
+    //   this.userSubmitted = false;
+    //   this.alertify.success("Congrats, you are successfully registered");
+    // }else{
+    //   this.alertify.error("Kindly provide the required fields");      
+    // }
     if(this.registerationForm.valid){
-      //this.user = Object.assign(this.user, this.registerationForm.value);
-      this.userService.addUser(this.userData());
-      this.registerationForm.reset();
-      this.userSubmitted = false;
-      this.alertify.success("Congrats, you are successfully registered");
-    }else{
-      this.alertify.error("Kindly provide the required fields");
-      
-    }
+      this.authService.registerUser(this.userData()).subscribe(() =>
+      {
+        this.onReset();
+        this.alertify.success("Congrats, you are successfully registered");
+      });
+      //AHora se usa interceptor error , esto funcionara globalmente para todas las solicitudes http
+      // , error => {
+      //   console.log(error);
+      //   this.alertify.error("Kindly provide the required fields");      
+      // });
+    }  
   }
 
-  userData(): User {
+  onReset(){
+    this.userSubmitted = false;
+    this.registerationForm.reset();    
+  }
+
+  userData(): UserForRegister {
     return this.user = {
       userName: this.userName.value,
       email: this.email.value,
@@ -92,7 +111,9 @@ export class UserRegisterComponent implements OnInit {
   }
 
 
-
-
-
+  
 }
+
+
+
+

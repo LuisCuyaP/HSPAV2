@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user';
+import { UserForRegister } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ constructor() { }
 
 
 //este metodo hace agregar arreglo por arreglo en cada add User -> [0], [1]
-addUser(user: User){    
+addUser(user: UserForRegister){    
   let users = [];
   if(localStorage.getItem('Users')){
     users = JSON.parse(localStorage.getItem('Users'));

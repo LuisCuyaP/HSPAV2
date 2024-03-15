@@ -80,7 +80,7 @@ namespace WebApi.Controllers
             //    return BadRequest(ModelState);
             
             var city = mapper.Map<City>(cityDto);
-            city.LastUpdateBy = 1;
+            city.LastUpdatedBy = 1;
             city.LastUpdatedOn = DateTime.Now;
 
 
@@ -103,7 +103,7 @@ namespace WebApi.Controllers
                 if (cityFromDb == null)
                     return BadRequest("Update not allowed");
 
-                cityFromDb.LastUpdateBy = 1;
+                cityFromDb.LastUpdatedBy = 1;
                 cityFromDb.LastUpdatedOn = DateTime.Now;
                 mapper.Map(cityDto, cityFromDb);
 
@@ -127,7 +127,7 @@ namespace WebApi.Controllers
             //si en el cuerpo no especifico todos los atributos lo seteare el update con un null, por ejemplo en esta entidad solo hay name entonce solo mando el name y lo seteara pero como en la entidad
             //no hay country no le afectara el udate
             var cityFromDb = await uow.CityRepository.FindCity(id);
-            cityFromDb.LastUpdateBy = 1;
+            cityFromDb.LastUpdatedBy = 1;
             cityFromDb.LastUpdatedOn = DateTime.Now;
 
             mapper.Map(cityUpdateDto, cityFromDb);
@@ -140,7 +140,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> UpdateCityPath(int id, JsonPatchDocument<City> cityToPath)
         {
             var cityFromDb = await uow.CityRepository.FindCity(id);
-            cityFromDb.LastUpdateBy = 1;
+            cityFromDb.LastUpdatedBy = 1;
             cityFromDb.LastUpdatedOn = DateTime.Now;
 
             cityToPath.ApplyTo(cityFromDb, ModelState);            

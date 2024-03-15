@@ -69,3 +69,6 @@ C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\Microsoft.AspN
 C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll
+C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.WebEncoders.dll
+C:\Repositorio\HSPA\Backend\WebApi\WebApi\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll

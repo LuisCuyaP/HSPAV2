@@ -55,9 +55,14 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Login(LoginReqDto loginReqDto)
         {
             var user = await uow.UserRepository.Authenticate(loginReqDto.UserName, loginReqDto.Password);
+            ApiError apiError = new ApiError();
             if (user == null)
             {
-                return Unauthorized();
+                //return Unauthorized("Usuario o password invalido");
+                apiError.ErrorCode = Unauthorized().StatusCode;
+                apiError.ErrorMessage = "Usuario o Password invalido";
+                apiError.ErrorDetails = "El error ocurre porque el usuario o password no existen";
+                return Unauthorized(apiError);
             }
 
             var loginRes = new LoginResDto();

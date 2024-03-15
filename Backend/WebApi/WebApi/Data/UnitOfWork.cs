@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using WebApi.Data.Repo;
 using WebApi.Interfaces;
+using WebAPI.Interfaces;
 
 namespace WebApi.Data
 {
@@ -17,6 +18,15 @@ namespace WebApi.Data
 
         public IUserRepository UserRepository =>
             new UserRepository(dc);
+
+        public IPropertyRepository PropertyRepository => 
+            new PropertyRepository(dc);
+
+        public IFurnishingTypeRepository FurnishingTypeRepository => 
+            new FurnishingTypeRepository(dc);
+
+        public IPropertyTypeRepository PropertyTypeRepository => 
+            new PropertyTypeRepository(dc);
 
         public async Task<bool> SaveAsync()
         {

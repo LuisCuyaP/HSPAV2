@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20240301165458_AddingPropertyRelacionEntidades.cs" />
+    <Compile Remove="Migrations\20240301165458_AddingPropertyRelacionEntidades.Designer.cs" />
+    <Compile Remove="Migrations\20240301170113_AddingPropertyRelacionEntidades.cs" />
+    <Compile Remove="Migrations\20240301170113_AddingPropertyRelacionEntidades.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />

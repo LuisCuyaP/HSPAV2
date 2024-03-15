@@ -1,4 +1,5 @@
 using AutoMapper;
+using crud_galery_hspa.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -38,6 +39,8 @@ namespace WebApi
             services.AddCors();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IPhotoService, PhotoService>();
+
 
             var secretKey = Configuration.GetSection("AppSettings:Key").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8
